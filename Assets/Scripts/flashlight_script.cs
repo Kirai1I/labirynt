@@ -9,11 +9,12 @@ public class flashlight_script : MonoBehaviour
     public bool isClicked;
     public float flashbattery = 100;
     public Text flashtext;
-    public float flashbatteryleft;
-    public float flashlevel;
+    public  float flashbatteryleft;
+    public  float flashlevel;
     public float flashdecrese = 1;
     public Light myLight;
     public Light myLight2;
+    public static flashlight_script Instance;
     private void Update()
     {
     if (myLight.enabled)
@@ -30,6 +31,10 @@ public class flashlight_script : MonoBehaviour
             flashbatteryleft = flashbatteryleft - flashdecrese;
             
         }
+        if (flashbatteryleft >= 100)
+        {
+            flashbatteryleft = 100;
+        }
         flashlevel = (flashbatteryleft / flashbattery) * 100;
         if (flashlevel <= 0)
         {
@@ -40,13 +45,16 @@ public class flashlight_script : MonoBehaviour
         {
             myLight.enabled = !myLight.enabled;
             myLight2.enabled = !myLight2.enabled;
+            
+            
         }
     }
     private void Start()
     {
-        flashbatteryleft = flashbattery;   
-        
+        flashbatteryleft = flashbattery;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
     }
-    
-
 }
